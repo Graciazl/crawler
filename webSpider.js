@@ -27,3 +27,10 @@ function loadHttp(url) {
         });
     });
 }
+
+function getDom(html) {
+    return new Promise(function (resolve, reject) {
+        var data = cheerio.load(html);
+        resolve(data);
+    });
+}
