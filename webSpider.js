@@ -7,6 +7,11 @@ var http = require('http'),
     cheerio = require('cheerio'),
     fs = require('fs');
 
+var originalURL = [
+    'http://info.yorkbbs.ca/default/tax',
+    'http://info.yorkbbs.ca/default/zhusu'
+];
+
 function loadHttp(url) {
     var options = URL.parse(url);
 
