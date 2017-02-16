@@ -39,3 +39,19 @@ function getDom(html) {
         resolve(body);
     });
 }
+
+function getUrlList(body) {
+    return new Promise(function(resolve, reject) {
+        var $ = body,
+            urlList = [];
+
+        var items = $('.item-sort').get().length;
+
+        for (var item = 0; item < items; item++ ) {
+            var url = $('.item-sort').eq(item).siblings().attr('href');
+            urlList.push(url);
+        }
+
+        resolve(urlList);
+    });
+}
