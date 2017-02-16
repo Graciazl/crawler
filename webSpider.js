@@ -9,7 +9,9 @@ var http = require('http'),
 
 var originalURL = [
     'http://info.yorkbbs.ca/default/tax',
-    'http://info.yorkbbs.ca/default/zhusu'
+    'http://info.yorkbbs.ca/default/zhusu',
+    'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=9',
+    'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
 function loadHttp(url) {
@@ -41,13 +43,13 @@ function getDom(html) {
 }
 
 function getUrlList(body) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var $ = body,
             urlList = [];
 
         var items = $('.item-sort').get().length;
 
-        for (var item = 0; item < items; item++ ) {
+        for (var item = 0; item < items; item++) {
             var url = $('.item-sort').eq(item).siblings().attr('href');
             urlList.push(url);
         }
