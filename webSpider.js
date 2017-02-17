@@ -42,15 +42,15 @@ function getDom(html) {
     });
 }
 
-function getUrlList(body) {
+function getUrlList(body, ele) {
     return new Promise(function (resolve, reject) {
         var $ = body,
             urlList = [];
 
-        var items = $('.item-sort').get().length;
+        var items = $(ele).get().length;
 
         for (var item = 0; item < items; item++) {
-            var url = $('.item-sort').eq(item).siblings().attr('href');
+            var url = $(ele).eq(item).siblings().attr('href');
             urlList.push(url);
         }
 
