@@ -30,9 +30,9 @@ function loadHttp(url) {
             });
 
             response.on('end', function () {
-/*                var decodedHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
+/*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
                 var decodeHtml = html.toString('utf8');
-                resolve(decodedHtml);
+                resolve(decodeHtml);
             });
         });
     });
