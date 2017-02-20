@@ -4,6 +4,7 @@
 
 var http = require('http'),
     URL = require('url'),
+    iconv = require('iconv-lite'),
     cheerio = require('cheerio'),
     fs = require('fs');
 
@@ -23,13 +24,15 @@ function loadHttp(url) {
 
     return new Promise(function (resolve, reject) {
         http.get(options, function (response) {
-            var html = '';
+            var html = [];
             response.on('data', function (data) {
-                html += data;
+                html.push(data);
             });
 
             response.on('end', function () {
-                resolve(html);
+/*                var decodedHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
+                var decodeHtml = html.toString('utf8');
+                resolve(decodedHtml);
             });
         });
     });
