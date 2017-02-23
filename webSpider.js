@@ -75,13 +75,20 @@ function getContentYorkBBS(body) {
         content.tags = $('.item-cont-tags').children().text(); // add comma
         content.contact = $('.item-views-cont').eq(0).children().first().find('span > em').first().text();
         content.phone = $('.item-cont-bigphone').children().first().text();
+        content.phone2 = '';
         content.language = $('.item_cont_lg').children().text();
         content.email = $('.item-views-cont-email').children().attr('href'); // email protection
+        content.serviceArea = '';
         content.address = $('.views-bigphone-address').text(); // format issue
+        content.postalCode = '';
+        content.coordinates = '';
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
-        content.id = $('.postmeta').children().first().text();
         content.updateTime = $('.postmeta').children().last().text();
-
+        content.uploadImages = '';
+        content.localImages = '';
+        content.url = '';
+        content.id = $('.postmeta').children().first().text();
+        
         resolve(content);
     });
 }
