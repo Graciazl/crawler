@@ -15,7 +15,9 @@ var originalURL = [
     'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
+/*
 var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
+*/
 
 function loadHttp(url) {
     var options = URL.parse(url);
@@ -60,5 +62,26 @@ function getUrlList(body, ele) {
         }
 
         resolve(urlList);
+    });
+}
+
+function getContentYorkBBS(body) {
+    return new Promise(function (resolve, reject) {
+        var $ = body,
+            content = {};
+
+        content.name = $('.views > h1').text().trim();
+        content.category = $('#SubCategoryName').text();
+        content.tags = $('.item-cont-tags').children().text(); // add comma
+        content.contact = $('.item-views-cont').eq(0).children().first().find('span > em').first().text();
+        content.phone = $('.item-cont-bigphone').children().first().text();
+        content.language = $('.item_cont_lg').children().text();
+        content.email = $('.item-views-cont-email').children().attr('href'); // email protection
+        content.address = $('.views-bigphone-address').text(); // format issue
+        content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
+        content.id = $('.postmeta').children().first().text();
+        content.updateTime = $('.postmeta').children().last().text();
+
+        resolve(content);
     });
 }
