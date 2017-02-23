@@ -85,3 +85,31 @@ function getContentYorkBBS(body) {
         resolve(content);
     });
 }
+
+function getContent51CA(body) {
+    return new Promise(function (resolve, reject) {
+        var $ = body,
+            content = {};
+
+        content.name = $('.MainTitle').text();
+        content.category = $('#PostBox > tr > td').eq(0).text().split('】')[1];
+        content.tags = '';
+        content.contact = $('.lf324').parent().parent().text().split('】')[1];
+        content.phone = $('.ColumnTitle').eq(4).parent().text().split('】')[1];
+        content.phone2 = $('.ColumnTitle').eq(6).parent().text().split('】')[1];
+        content.language = '';
+        content.email = $('.ColumnTitle').eq(5).siblings().attr('href').split(':')[1];
+        content.serviceArea = $('.ColumnTitle').eq(7).parent().text().split('】')[1];
+        content.address = $('.ColumnTitle').eq(9).parent().text().split('】')[1];
+        content.postalCode = '';
+        content.coordinates = $('.ColumnTitle').eq(8).siblings().attr('href');
+        content.homepage = '';
+        content.updateTime = $('.ColumnTitle').eq(1).parent().text().split('】')[1];
+        content.uploadImages = '';
+        content.localImages = '';
+        content.url = '';
+        content.id = '';
+
+        resolve(content);
+    });
+}
