@@ -83,11 +83,11 @@ function getContentYorkBBS(body) {
         content.postalCode = '';
         content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
-        content.updateTime = $('.postmeta').children().last().text();
+        content.updateTime = $('.postmeta').children().last().text().split('：')[1];
         content.uploadImages = '';
         content.localImages = '';
         content.url = '';
-        content.id = $('.postmeta').children().first().text();
+        content.id = $('.postmeta').children().first().text().split('：')[1];
 
         resolve(content);
     });
