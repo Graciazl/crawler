@@ -81,7 +81,7 @@ function getContentYorkBBS(body) {
         content.serviceArea = '';
         content.address = $('.views-bigphone-address').text(); // format issue
         content.postalCode = '';
-        content.coordinates = '';
+        content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
         content.updateTime = $('.postmeta').children().last().text();
         content.uploadImages = '';
