@@ -112,17 +112,19 @@ function getContent51CA(body) {
         content.coordinates = $('.ColumnTitle').eq(8).siblings().attr('href');
         content.homepage = '';
         content.updateTime = $('.ColumnTitle').eq(1).parent().text().split('】')[1];
-        content.uploadImages = images();
+        content.uploadImages = getImagesURL();
         content.localImages = '';
         content.url = '';
         content.id = '';
 
-        function images() {
+        function getImagesURL() {
             var str = '';
 
-            $('.attachlist > li').each(function(index) {
-                str += $(this).children().attr('href');
-            });
+            if ($('body').has('.attachlist')) {
+                $('.attachlist > li').each(function(index) {
+                    str += $(this).children().attr('href');
+                });
+            }
 
             return str;
         }
