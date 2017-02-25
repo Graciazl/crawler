@@ -72,7 +72,8 @@ function getContentYorkBBS(body) {
 
         content.name = $('.views > h1').text().trim();
         content.category = $('#SubCategoryName').text();
-        content.tags = $('.item-cont-tags').children().text(); // add comma
+/*        content.tags = $('.item-cont-tags').children().text();*/
+        content.tags = getTags();
         content.contact = $('.item-views-cont').eq(0).children().first().find('span > em').first().text();
         content.phone = $('.item-cont-bigphone').children().first().text();
         content.phone2 = '';
@@ -88,6 +89,16 @@ function getContentYorkBBS(body) {
         content.localImages = '';
         content.url = '';
         content.id = $('.postmeta').children().first().text().split('：')[1];
+
+        function getTags() {
+            var tagsArr = [];
+
+            $('.item-cont-tags').children().each(function(index) {
+                tagsArr.push($(this).text());
+            });
+
+            return tagsArr.join(',');
+        }
 
         resolve(content);
     });
