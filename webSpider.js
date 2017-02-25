@@ -72,7 +72,6 @@ function getContentYorkBBS(body) {
 
         content.name = $('.views > h1').text().trim();
         content.category = $('#SubCategoryName').text();
-        /*        content.tags = $('.item-cont-tags').children().text();*/
         content.tags = getTags('.item-cont-tags');
         content.contact = $('.item-views-cont').eq(0).children().first().find('span > em').first().text();
         content.phone = $('.item-cont-bigphone').children().first().text();
@@ -85,7 +84,7 @@ function getContentYorkBBS(body) {
         content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
         content.updateTime = $('.postmeta').children().last().text().split('：')[1];
-        content.uploadImages = getImagesYorkBBS();
+        content.uploadImages = getImagesYorkBBS('.views-detail-text');
         content.localImages = '';
         content.url = '';
         content.id = $('.postmeta').children().first().text().split('：')[1];
@@ -100,12 +99,12 @@ function getContentYorkBBS(body) {
             return tagsArr.join(',');
         }
 
-        function getImagesYorkBBS() {
+        function getImagesYorkBBS(ele) {
             var imgArr = [];
 /*                var prefix = 'info.img1.ybbs.ca';*/
 
-            if ($('.views-detail-text').has('img')) {
-                $('.views-detail-text').find('img').each(function (index) {
+            if ($(ele).has('img')) {
+                $(ele).find('img').each(function (index) {
                     imgArr.push($(this).attr('src'));
 /*                    var url = prefix + $(this).attr('src');
                     imgArr.push(url);*/
@@ -161,3 +160,11 @@ function getContent51CA(body) {
         resolve(content);
     });
 }
+
+var urlyork = 'http://info.yorkbbs.ca/item/4339';
+loadHttp(urlyork)
+    .then(getDom)
+    .then(getContentYorkBBS)
+    .then(function(data) {
+        console.log(data);
+    });
