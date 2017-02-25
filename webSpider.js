@@ -16,8 +16,8 @@ var originalURL = [
 ];
 
 /*
-var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
-*/
+ var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
+ */
 
 function loadHttp(url) {
     var options = URL.parse(url);
@@ -34,7 +34,7 @@ function loadHttp(url) {
             });
 
             response.on('end', function () {
-/*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
+                /*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
                 var decodeHtml = html.toString('utf8');
                 resolve(decodeHtml);
             });
@@ -72,7 +72,7 @@ function getContentYorkBBS(body) {
 
         content.name = $('.views > h1').text().trim();
         content.category = $('#SubCategoryName').text();
-/*        content.tags = $('.item-cont-tags').children().text();*/
+        /*        content.tags = $('.item-cont-tags').children().text();*/
         content.tags = getTags('.item-cont-tags');
         content.contact = $('.item-views-cont').eq(0).children().first().find('span > em').first().text();
         content.phone = $('.item-cont-bigphone').children().first().text();
@@ -85,7 +85,7 @@ function getContentYorkBBS(body) {
         content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
         content.updateTime = $('.postmeta').children().last().text().split('：')[1];
-        content.uploadImages = '';
+        content.uploadImages = getImagesYorkBBS();
         content.localImages = '';
         content.url = '';
         content.id = $('.postmeta').children().first().text().split('：')[1];
@@ -93,11 +93,29 @@ function getContentYorkBBS(body) {
         function getTags(ele) {
             var tagsArr = [];
 
-            $(ele).children().each(function(index) {
+            $(ele).children().each(function (index) {
                 tagsArr.push($(this).text());
             });
 
             return tagsArr.join(',');
+        }
+
+        function getImagesYorkBBS() {
+            var imgArr = [];
+/*                var prefix = 'info.img1.ybbs.ca';*/
+
+            if ($('.views-detail-text').has('img')) {
+                $('.views-detail-text').find('img').each(function (index) {
+                    imgArr.push($(this).attr('src'));
+/*                    var url = prefix + $(this).attr('src');
+                    imgArr.push(url);*/
+                });
+
+                return imgArr.join(',');
+            } else {
+                return '';
+            }
+
         }
 
         resolve(content);
@@ -132,7 +150,7 @@ function getContent51CA(body) {
             var str = '';
 
             if ($('body').has('.attachlist')) {
-                $('.attachlist > li').each(function(index) {
+                $('.attachlist > li').each(function (index) {
                     str += $(this).children().attr('href');
                 });
             }
