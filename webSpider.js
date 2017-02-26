@@ -34,7 +34,7 @@ function loadHttp(url) {
             });
 
             response.on('end', function () {
-                /*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
+/*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
                 var decodeHtml = html.toString('utf8');
                 resolve(decodeHtml);
             });
@@ -84,7 +84,7 @@ function getContentYorkBBS(body) {
         content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
         content.updateTime = $('.postmeta').children().last().text().split('：')[1];
-        content.uploadImages = getImagesYorkBBS('.views-detail-text');
+        content.uploadImages = getImagesURL($, '.views-detail-text', 'img', 'src');
         content.localImages = '';
         content.url = '';
         content.id = $('.postmeta').children().first().text().split('：')[1];
@@ -97,24 +97,6 @@ function getContentYorkBBS(body) {
             });
 
             return tagsArr.join(',');
-        }
-
-        function getImagesYorkBBS(ele) {
-            var imgArr = [];
-/*                var prefix = 'info.img1.ybbs.ca';*/
-
-            if ($(ele).has('img')) {
-                $(ele).find('img').each(function (index) {
-                    imgArr.push($(this).attr('src'));
-/*                    var url = prefix + $(this).attr('src');
-                    imgArr.push(url);*/
-                });
-
-                return imgArr.join(',');
-            } else {
-                return '';
-            }
-
         }
 
         resolve(content);
@@ -140,31 +122,28 @@ function getContent51CA(body) {
         content.coordinates = $('.ColumnTitle').eq(8).siblings().attr('href');
         content.homepage = '';
         content.updateTime = $('.ColumnTitle').eq(1).parent().text().split('】')[1];
-        content.uploadImages = getImagesURL();
+        content.uploadImages = getImagesURL($, 'body', '.picsSlideGroup', 'href');
         content.localImages = '';
         content.url = '';
         content.id = '';
-
-        function getImagesURL() {
-            var str = '';
-
-            if ($('body').has('.attachlist')) {
-                $('.attachlist > li').each(function (index) {
-                    str += $(this).children().attr('href');
-                });
-            }
-
-            return str;
-        }
 
         resolve(content);
     });
 }
 
-var urlyork = 'http://info.yorkbbs.ca/item/4339';
-loadHttp(urlyork)
-    .then(getDom)
-    .then(getContentYorkBBS)
-    .then(function(data) {
-        console.log(data);
-    });
+function getImagesURL(body, ele1, ele2, attr) {
+    var imgArr = [],
+        $ = body;
+
+    if ($(ele1).has(ele2)) {
+        $(ele1).find(ele2).each(function (index) {
+            imgArr.push($(this).attr(attr));
+        });
+
+        return imgArr.join(',');
+    } else {
+
+        return '';
+    }
+
+}
