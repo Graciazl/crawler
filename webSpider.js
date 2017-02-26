@@ -109,23 +109,27 @@ function getContent51CA(body) {
             content = {};
 
         content.name = $('.MainTitle').text();
-        content.category = $('#PostBox > tr > td').eq(0).text().split('】')[1];
+        content.category = getValue('.ColumnTitle', 0);;
         content.tags = '';
-        content.contact = $('.lf324').parent().parent().text().split('】')[1];
-        content.phone = $('.ColumnTitle').eq(4).parent().text().split('】')[1];
-        content.phone2 = $('.ColumnTitle').eq(6).parent().text().split('】')[1];
+        content.contact = getValue('.ColumnTitle', 3);
+        content.phone = getValue('.ColumnTitle', 4);
+        content.phone2 = getValue('.ColumnTitle', 6);
         content.language = '';
         content.email = $('.ColumnTitle').eq(5).siblings().attr('href').split(':')[1];
-        content.serviceArea = $('.ColumnTitle').eq(7).parent().text().split('】')[1];
-        content.address = $('.ColumnTitle').eq(9).parent().text().split('】')[1];
+        content.serviceArea = getValue('.ColumnTitle', 7);
+        content.address = getValue('.ColumnTitle', 9);
         content.postalCode = '';
         content.coordinates = $('.ColumnTitle').eq(8).siblings().attr('href');
         content.homepage = '';
-        content.updateTime = $('.ColumnTitle').eq(1).parent().text().split('】')[1];
+        content.updateTime = getValue('.ColumnTitle', 1);
         content.uploadImages = getImagesURL($, 'body', '.picsSlideGroup', 'href');
         content.localImages = '';
         content.url = '';
         content.id = '';
+
+        function getValue(ele, index) {
+            return $(ele).eq(index).parent().text().split('】')[1];
+        }
 
         resolve(content);
     });
