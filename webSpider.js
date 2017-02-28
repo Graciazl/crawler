@@ -15,6 +15,8 @@ var originalURL = [
     'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
+var file = 'imgs.jpg';
+
 /*
  var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
  */
@@ -34,7 +36,7 @@ function loadHttp(url) {
             });
 
             response.on('end', function () {
-/*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
+                /*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
                 var decodeHtml = html.toString('utf8');
                 resolve(decodeHtml);
             });
@@ -109,7 +111,8 @@ function getContent51CA(body) {
             content = {};
 
         content.name = $('.MainTitle').text();
-        content.category = getValue('.ColumnTitle', 0);;
+        content.category = getValue('.ColumnTitle', 0);
+        ;
         content.tags = '';
         content.contact = getValue('.ColumnTitle', 3);
         content.phone = getValue('.ColumnTitle', 4);
@@ -150,4 +153,14 @@ function getImagesURL(body, ele1, ele2, attr) {
         return '';
     }
 
+}
+
+function saveImage(img) {
+    fs.writeFile(file, img, 'binary', function (err) {
+        if (err) {
+            reject(err);
+        } else {
+            console.log('Data has been saved successfully.');
+        }
+    });
 }
