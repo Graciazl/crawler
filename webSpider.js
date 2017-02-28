@@ -49,6 +49,11 @@ function getUtf8(html) {
     return html.toString('utf8');
 }
 
+function getGb2312(html) {
+    var buffer = Buffer.concat(html);
+    return iconv.decode(buffer, 'gb2312');
+}
+
 function getDom(html) {
     return new Promise(function (resolve, reject) {
         var body = cheerio.load(html);
