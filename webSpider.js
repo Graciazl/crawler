@@ -45,6 +45,10 @@ function loadHttp(url, callback) {
     });
 }
 
+function getUtf8(html) {
+    return html.toString('utf8');
+}
+
 function getDom(html) {
     return new Promise(function (resolve, reject) {
         var body = cheerio.load(html);
