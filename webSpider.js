@@ -21,7 +21,7 @@ var file = 'imgs.jpg';
  var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
  */
 
-function loadHttp(url) {
+function loadHttp(url, callback) {
     var options = URL.parse(url);
 
     options.headers = {
@@ -31,14 +31,15 @@ function loadHttp(url) {
     return new Promise(function (resolve, reject) {
         http.get(options, function (response) {
             var html = [];
+
             response.on('data', function (data) {
                 html.push(data);
             });
 
-            response.on('end', function () {
-                /*                var decodeHtml = iconv.decode(Buffer.concat(html), 'gb2312');*/
-                var decodeHtml = html.toString('utf8');
-                resolve(decodeHtml);
+            response.on('end',function() {
+                var result = callback(html);
+
+                resolve(result);
             });
         });
     });
