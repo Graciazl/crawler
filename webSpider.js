@@ -160,9 +160,9 @@ function saveImage(chunk) {
 
     fs.writeFile(file, imgBuffer, function (err) {
         if (err) {
-            reject(err);
+           return reject(err);
         } else {
-            console.log('Data has been saved successfully.');
+           return console.log('Data has been saved successfully.');
         }
     });
 }
