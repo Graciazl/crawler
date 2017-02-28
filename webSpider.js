@@ -155,8 +155,10 @@ function getImagesURL(body, ele1, ele2, attr) {
 
 }
 
-function saveImage(img) {
-    fs.writeFile(file, img, 'binary', function (err) {
+function saveImage(chunk) {
+    var imgBuffer = Buffer.concat(chunk);
+
+    fs.writeFile(file, imgBuffer, function (err) {
         if (err) {
             reject(err);
         } else {
