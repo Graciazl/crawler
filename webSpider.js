@@ -112,7 +112,7 @@ function getContentYorkBBS(body) {
             return tagsArr.join(',');
         }
 
-        resolve(content.id);
+        resolve(content);
     });
 }
 
@@ -191,3 +191,4 @@ function createFolder(data) {
         });
     })
 }
+
