@@ -6,7 +6,8 @@ var http = require('http'),
     URL = require('url'),
     iconv = require('iconv-lite'),
     cheerio = require('cheerio'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 var originalURL = [
     'http://info.yorkbbs.ca/default/tax',
@@ -15,7 +16,7 @@ var originalURL = [
     'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
-var file = 'imgs.jpg';
+var file = 'imgs';
 
 /*
  var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
@@ -111,7 +112,7 @@ function getContentYorkBBS(body) {
             return tagsArr.join(',');
         }
 
-        resolve(content);
+        resolve(content.id);
     });
 }
 
@@ -175,4 +176,18 @@ function saveImage(chunk) {
            return console.log('Data has been saved successfully.');
         }
     });
+}
+
+function createFolder(data) {
+    return new Promise(function(resolve, reject) {
+        var folder = data;
+
+        fs.mkdir(folder, function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(folder);
+            }
+        });
+    })
 }
