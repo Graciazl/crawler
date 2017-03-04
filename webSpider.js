@@ -112,7 +112,9 @@ function getContentYorkBBS(body) {
             return tagsArr.join(',');
         }
 
-        resolve(content);
+        var result = [content, content.id, content.uploadImages];
+
+        resolve(result);
     });
 }
 
@@ -123,7 +125,6 @@ function getContent51CA(body) {
 
         content.name = $('.MainTitle').text();
         content.category = getValue('.ColumnTitle', 0);
-        ;
         content.tags = '';
         content.contact = getValue('.ColumnTitle', 3);
         content.phone = getValue('.ColumnTitle', 4);
@@ -145,7 +146,9 @@ function getContent51CA(body) {
             return $(ele).eq(index).parent().text().split('】')[1];
         }
 
-        resolve(content);
+        var result = [content, content.id, content.uploadImages];
+
+        resolve(result);
     });
 }
 
@@ -189,6 +192,5 @@ function createFolder(data) {
                 resolve(folder);
             }
         });
-    })
+    });
 }
-
