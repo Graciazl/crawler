@@ -37,7 +37,7 @@ function loadHttp(url, callback) {
                 html.push(data);
             });
 
-            response.on('end',function() {
+            response.on('end', function () {
                 var result = callback(html);
 
                 resolve(result);
@@ -53,6 +53,10 @@ function getUtf8(html) {
 function getGb2312(html) {
     var buffer = Buffer.concat(html);
     return iconv.decode(buffer, 'gb2312');
+}
+
+function getImgBuffer(chunk) {
+    return Buffer.concat(chunk);
 }
 
 function getDom(html) {
@@ -169,20 +173,21 @@ function getImagesURL(body, ele1, ele2, attr) {
 
 }
 
-function saveImage(chunk) {
-    var imgBuffer = Buffer.concat(chunk);
-
-    fs.writeFile(file, imgBuffer, function (err) {
-        if (err) {
-           return reject(err);
-        } else {
-           return console.log('Data has been saved successfully.');
-        }
-    });
+function saveImage(url, fileName) {
+    loadHttp(url, getImgBuffer)
+        .then(function(imgBuffer) {
+            fs.writeFile(fileName, imgBuffer, function (err) {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log('Data has been saved successfully.');
+                }
+            });
+        });
 }
 
 function createFolder(data) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var folder = data;
 
         fs.mkdir(folder, function (err) {
