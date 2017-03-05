@@ -186,15 +186,14 @@ function saveImage(url, fileName) {
         });
 }
 
-function createFolder(data) {
+function createFolder(folder) {
     return new Promise(function (resolve, reject) {
-        var folder = data;
 
         fs.mkdir(folder, function (err) {
             if (err) {
                 reject(err);
             } else {
-                resolve(folder);
+                resolve();
             }
         });
     });
