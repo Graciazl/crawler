@@ -198,3 +198,15 @@ function createFolder(folder) {
         });
     });
 }
+
+function checkFolderExists(folder) {
+    fs.readdir(folder, function (err, files) {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                createFolder(folder);
+            } else {
+                reject(err);
+            }
+        }
+    });
+}
