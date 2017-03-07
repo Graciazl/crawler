@@ -187,15 +187,12 @@ function saveImage(url, fileName) {
 }
 
 function createFolder(folder) {
-    return new Promise(function (resolve, reject) {
-
-        fs.mkdir(folder, function (err) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
+    fs.mkdir(folder, function (err) {
+        if (err) {
+            reject(err);
+        } else {
+            return;
+        }
     });
 }
 
