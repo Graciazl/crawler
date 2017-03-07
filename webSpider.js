@@ -175,7 +175,7 @@ function getImagesURL(body, ele1, ele2, attr) {
 
 function saveImage(url, fileName) {
     loadHttp(url, getImgBuffer)
-        .then(function(imgBuffer) {
+        .then(function (imgBuffer) {
             fs.writeFile(fileName, imgBuffer, function (err) {
                 if (err) {
                     reject(err);
@@ -209,4 +209,10 @@ function checkFolderExists(folder) {
             }
         }
     });
+}
+
+function createPath(folder, url) {
+    var fileName = path.basename(url);
+
+    return path.join(folder, fileName);
 }
