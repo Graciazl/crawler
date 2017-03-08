@@ -178,9 +178,7 @@ function saveImage(url, fileName) {
         .then(function (imgBuffer) {
             fs.writeFile(fileName, imgBuffer, function (err) {
                 if (err) {
-                    reject(err);
-                } else {
-                    console.log('Data has been saved successfully.');
+                    return reject(err);
                 }
             });
         });
@@ -189,9 +187,7 @@ function saveImage(url, fileName) {
 function createFolder(folder) {
     fs.mkdir(folder, function (err) {
         if (err) {
-            reject(err);
-        } else {
-            return;
+            return reject(err);
         }
     });
 }
@@ -202,7 +198,7 @@ function checkFolderExists(folder) {
             if (err.code === 'ENOENT') {
                 createFolder(folder);
             } else {
-                reject(err);
+                return reject(err);
             }
         }
     });
