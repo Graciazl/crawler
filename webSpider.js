@@ -16,12 +16,6 @@ var originalURL = [
     'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
-var file = 'imgs';
-
-/*
- var keys = [name, category, tags, contact, avartar, phone, phone2, language, email, serviceArea, address, postalCode, coordinates, homepage, htmlDescription, plainDescription, uploadImages, externalImages, url, id];
- */
-
 function loadHttp(url, callback) {
     var options = URL.parse(url);
 
