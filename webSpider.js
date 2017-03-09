@@ -16,6 +16,8 @@ var originalURL = [
     'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
+var key = 'localImages';
+
 function loadHttp(url, callback) {
     var options = URL.parse(url);
 
@@ -164,7 +166,6 @@ function getImagesURL(body, ele1, ele2, attr) {
 
         return '';
     }
-
 }
 
 function saveImage(url, fileName) {
@@ -204,28 +205,26 @@ function createPath(folder, url) {
     return path.join(folder, fileName);
 }
 
-function downloadImages(data) {
-    return new Promise(function (resolve, reject) {
-        var content = data[0],
-            id = data[1],
-            imgs = data[2],
-            imgPath = [];
+function downloadImages(data, key) {
+    var content = data[0],
+        id = data[1],
+        imgs = data[2],
+        imgPath = [];
 
-        if (imgs !== '') {
-            var imgsUrl = imgs.split(',');
+    if (imgs !== '') {
+        var imgsUrl = imgs.split(',');
 
-            checkFolderExists(id);
+        checkFolderExists(id);
 
-            imgsUrl.forEach(function (ele) {
-                var filePath = createPath(id, ele);
+        imgsUrl.forEach(function (ele) {
+            var filePath = createPath(id, ele);
 
-                saveImage(ele, filePath);
-                imgPath.push(filePath);
-            });
-        }
+            saveImage(ele, filePath);
+            imgPath.push(filePath);
+        });
+    }
 
-        content.localImages = imgPath.join(',');
+    content[key] = imgPath.join(',');
 
-        resolve(content);
-    });
+    return content;
 }
