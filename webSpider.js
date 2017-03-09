@@ -63,19 +63,17 @@ function getDom(html) {
 }
 
 function getUrlList(body, ele) {
-    return new Promise(function (resolve, reject) {
-        var $ = body,
-            urlList = [];
+    var $ = body,
+        urlList = [];
 
-        var items = $(ele).get().length;
+    var items = $(ele).get().length;
 
-        for (var item = 0; item < items; item++) {
-            var url = $(ele).eq(item).siblings().attr('href');
-            urlList.push(url);
-        }
+    for (var item = 0; item < items; item++) {
+        var url = $(ele).eq(item).siblings().attr('href');
+        urlList.push(url);
+    }
 
-        resolve(urlList);
-    });
+    return urlList;
 }
 
 function getContentYorkBBS(body) {
