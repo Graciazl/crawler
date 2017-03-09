@@ -16,7 +16,9 @@ var originalURL = [
     'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
 ];
 
-var key = 'localImages';
+var key = 'localImages',
+    eleYork = '.item-sort',
+    ele51CA = '.itempos';
 
 function loadHttp(url, callback) {
     var options = URL.parse(url);
