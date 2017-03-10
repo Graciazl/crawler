@@ -18,7 +18,9 @@ var originalURL = [
 
 var key = 'localImages',
     eleYork = '.item-sort',
-    ele51CA = '.itempos';
+    ele51CA = '.itempos',
+    prefixYork = 'info.yorkbbs.ca',
+    prefix51CA = 'www.51.ca/service/';
 
 function loadHttp(url, callback) {
     var options = URL.parse(url);
@@ -64,9 +66,10 @@ function getDom(html) {
     });
 }
 
-function getUrlList(body, ele) {
+function getUrlList(body, ele, prefix) {
     var $ = body,
-        urlList = [];
+        urlList = [],
+        intactUrl = [];
 
     var items = $(ele).get().length;
 
@@ -75,7 +78,11 @@ function getUrlList(body, ele) {
         urlList.push(url);
     }
 
-    return urlList;
+    intactUrl = urlList.map(function(e) {
+        return path.join(prefix, e);
+    });
+
+    return intactUrl;
 }
 
 function getContentYorkBBS(body) {
