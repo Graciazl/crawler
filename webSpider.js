@@ -147,7 +147,7 @@ function getContent51CA(body) {
         content.uploadImages = getImagesURL($, 'body', '.picsSlideGroup', 'href');
         content.localImages = '';
         content.url = '';
-        content.id = '';
+        content.id = $('input[name="itemid"]').attr('value');
 
         function getValue(ele, index) {
             return $(ele).eq(index).parent().text().split('】')[1];
