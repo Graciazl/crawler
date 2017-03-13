@@ -78,7 +78,7 @@ function getUrlList(body, ele, prefix) {
         urlList.push(url);
     }
 
-    intactUrl = urlList.map(function(e) {
+    intactUrl = urlList.map(function (e) {
         return path.join(prefix, e);
     });
 
@@ -136,7 +136,7 @@ function getContent51CA(body) {
         content.contact = getValue('.ColumnTitle', 3);
         content.phone = getValue('.ColumnTitle', 4);
         content.phone2 = getValue('.ColumnTitle', 6);
-        content.language = '';
+        content.language = getLanguage('#CatTitleBox > span > img');
         content.email = $('.ColumnTitle').eq(5).siblings().attr('href').split(':')[1];
         content.serviceArea = getValue('.ColumnTitle', 7);
         content.address = getValue('.ColumnTitle', 9);
@@ -151,6 +151,29 @@ function getContent51CA(body) {
 
         function getValue(ele, index) {
             return $(ele).eq(index).parent().text().split('】')[1];
+        }
+
+        function getLanguage(ele) {
+            var lan = [];
+
+            $(ele).each(function () {
+                switch ($(this).attr('src')) {
+                    case 'http://www.51.ca/images/lang_e.gif':
+                        lan.push('英');
+                        break;
+
+                    case 'http://www.51.ca/images/lang_m.gif':
+                        lan.push('国');
+                        break;
+
+                    case 'http://www.51.ca/images/lang_c.gif':
+                        lan.push('粤');
+                        break;
+                }
+            });
+
+            return lan.join(',');
+
         }
 
         var result = [content, content.id, content.uploadImages];
