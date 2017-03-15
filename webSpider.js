@@ -17,9 +17,9 @@ var originalURL = [
 ];
 
 var key = 'localImages',
-    eleYork = '.item-sort',
+    eleYorkBBS = '.item-sort',
     ele51CA = '.itempos',
-    prefixYork = 'http://info.yorkbbs.ca',
+    prefixYorkBBS = 'http://info.yorkbbs.ca',
     prefix51CA = 'www.51.ca/service/';
 
 function loadHttp(url, callback) {
@@ -87,8 +87,8 @@ function getUrlList(body, ele, prefix) {
 
 function getUrlListYorkBBS(url) {
     return new Promise(function (resolve, reject) {
-        var urlList = getUrlList(url, eleYork, prefixYork);
-        resolve(urlList);
+        var urlList = getUrlList(url, eleYorkBBS, prefixYorkBBS);
+        resolve(urlList[1]);
     });
 }
 
