@@ -79,7 +79,8 @@ function getUrlList(body, ele, prefix) {
     }
 
     intactUrl = urlList.map(function (e) {
-        return path.join(prefix, e);
+        /*        return path.join(prefix, e);*/
+        return prefix + e;
     });
 
     return intactUrl;
