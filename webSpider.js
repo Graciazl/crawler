@@ -85,6 +85,13 @@ function getUrlList(body, ele, prefix) {
     return intactUrl;
 }
 
+function getUrlListYorkBBS(url) {
+    return new Promise(function (resolve, reject) {
+        var urlList = getUrlList(url, eleYork, prefixYork);
+        resolve(urlList);
+    });
+}
+
 function getContentYorkBBS(body) {
     return new Promise(function (resolve, reject) {
         var $ = body,
@@ -173,7 +180,6 @@ function getContent51CA(body) {
             });
 
             return lan.join(',');
-
         }
 
         var result = [content, content.id, content.uploadImages];
