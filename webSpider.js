@@ -85,13 +85,6 @@ function getUrlList(body, ele, prefix) {
     return intactUrl;
 }
 
-/*function getUrlListYorkBBS(url) {
-    return new Promise(function (resolve, reject) {
-        var urlList = getUrlList(url, eleYork, prefixYork);
-        resolve(urlList);
-    });
-}*/
-
 function getUrlListYorkBBS(url) {
     return new Promise(function (resolve, reject) {
         var urlList = getUrlList(url, eleYork, prefixYork);
