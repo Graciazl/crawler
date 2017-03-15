@@ -79,7 +79,6 @@ function getUrlList(body, ele, prefix) {
     }
 
     intactUrl = urlList.map(function (e) {
-        /*        return path.join(prefix, e);*/
         return prefix + e;
     });
 
@@ -89,7 +88,7 @@ function getUrlList(body, ele, prefix) {
 function getUrlListYorkBBS(url) {
     return new Promise(function (resolve, reject) {
         var urlList = getUrlList(url, eleYorkBBS, prefixYorkBBS);
-        resolve(urlList[1]);
+        resolve(urlList);
     });
 }
 
