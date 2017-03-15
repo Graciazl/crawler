@@ -249,7 +249,7 @@ function createPath(folder, url) {
     return path.join(folder, fileName);
 }
 
-function downloadImages(data, key) {
+function imageProcess(data, key) {
     var content = data[0],
         id = data[1],
         imgs = data[2],
@@ -271,4 +271,11 @@ function downloadImages(data, key) {
     content[key] = imgPath.join(',');
 
     return content;
+}
+
+function downloadImages(data) {
+    return new Promise(function (resolve, reject) {
+        var result = imageProcess(data, key);
+        resolve(result);
+    });
 }
