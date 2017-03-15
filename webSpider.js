@@ -278,3 +278,14 @@ function downloadImages(data) {
         resolve(result);
     });
 }
+
+function contentProcessYorkBBS(url) {
+    return new Promise(function (resolve, reject) {
+        var result = loadHttp(url, getUtf8)
+            .then(getDom)
+            .then(getContentYorkBBS)
+            .then(downloadImages);
+
+        resolve(result);
+    });
+}
