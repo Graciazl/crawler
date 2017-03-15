@@ -92,6 +92,13 @@ function getUrlListYorkBBS(url) {
     });
 }
 
+function getUrlList51CA(url) {
+    return new Promise(function (resolve, reject) {
+        var urlList = getUrlList(url, ele51CA, prefix51CA);
+        resolve(urlList);
+    });
+}
+
 function getContentYorkBBS(body) {
     return new Promise(function (resolve, reject) {
         var $ = body,
