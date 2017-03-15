@@ -20,7 +20,7 @@ var key = 'localImages',
     eleYorkBBS = '.item-sort',
     ele51CA = '.itempos',
     prefixYorkBBS = 'http://info.yorkbbs.ca',
-    prefix51CA = 'www.51.ca/service/';
+    prefix51CA = 'http://www.51.ca/service/';
 
 function loadHttp(url, callback) {
     var options = URL.parse(url);
