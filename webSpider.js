@@ -289,3 +289,14 @@ function contentProcessYorkBBS(url) {
         resolve(result);
     });
 }
+
+function contentProcess51CA(url) {
+    return new Promise(function (resolve, reject) {
+        var result = loadHttp(url, getGb2312)
+            .then(getDom)
+            .then(getContent51CA)
+            .then(downloadImages);
+
+        resolve(result);
+    });
+}
