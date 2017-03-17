@@ -300,3 +300,15 @@ function contentProcess51CA(url) {
         resolve(result);
     });
 }
+
+loadHttp(originalURL[0], getUtf8)
+    .then(getDom)
+    .then(getUrlListYorkBBS)
+    .then(function (data) {
+        return Promise.all(data.map(function (index) {
+            return contentProcessYorkBBS(index);
+        }));
+    })
+    .then(function (data) {
+        console.log(data);
+    });
