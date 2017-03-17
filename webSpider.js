@@ -139,9 +139,9 @@ function getContentYorkBBS(body) {
     });
 }
 
-function getContent51CA(body) {
+function getContent51CA(data) {
     return new Promise(function (resolve, reject) {
-        var $ = body,
+        var $ = data[0],
             content = {};
 
         content.name = $('.MainTitle').text();
@@ -160,7 +160,7 @@ function getContent51CA(body) {
         content.updateTime = getValue('.ColumnTitle', 1);
         content.uploadImages = getImagesURL($, 'body', '.picsSlideGroup', 'href');
         content.localImages = '';
-        content.url = '';
+        content.url = data[1];
         content.id = $('input[name="itemid"]').attr('value');
 
         function getValue(ele, index) {
@@ -291,14 +291,11 @@ function contentProcessYorkBBS(url) {
 }
 
 function contentProcess51CA(url) {
-    return new Promise(function (resolve, reject) {
-        var result = loadHttp(url, getGb2312)
-            .then(getDom)
-            .then(getContent51CA)
-            .then(downloadImages);
+    var body = loadHttp(url, getGb2312).then(getDom);
 
-        resolve(result);
-    });
+    return Promise.all([body, url])
+        .then(getContent51CA);
+
 }
 
 loadHttp(originalURL[0], getUtf8)
