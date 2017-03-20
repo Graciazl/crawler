@@ -104,6 +104,9 @@ function getContentYorkBBS(data) {
         var $ = data[0],
             content = {};
 
+        var encodeStr = $('.item-views-cont-email').children().attr('href'),
+            encodeEmail = encodeStr.split('#')[1];
+
         content.name = $('.views > h1').text().trim();
         content.category = $('#SubCategoryName').text();
         content.tags = getTags('.item-cont-tags');
@@ -111,7 +114,6 @@ function getContentYorkBBS(data) {
         content.phone = $('.item-cont-bigphone').children().first().text();
         content.phone2 = '';
         content.language = $('.item_cont_lg').children().text();
-/*        content.email = $('.item-views-cont-email').children().attr('href'); // email protection*/
         content.email = emailDecode(encodeEmail);
         content.serviceArea = '';
         content.address = $('.views-bigphone-address').text().trim();
@@ -134,13 +136,23 @@ function getContentYorkBBS(data) {
             return tagsArr.join(',');
         }
 
-        var encodeStr = $('.item-views-cont-email').children().attr('href'),
-            encodeEmail = encodeStr.split('#')[1];
-
         var result = [content, content.id, content.uploadImages];
 
         resolve(result);
     });
+}
+
+function emailDecode(encodeEmail) {
+    var e = '',
+        r = parseInt(encodeEmail.substr(0, 2), 16),
+        len = encodeEmail.length;
+
+    for (var n = 2; n < len - 1; n += 2) {
+        var i = parseInt(encodeEmail.substr(n, 2), 16) ^ r;
+        e += String.fromCharCode(i);
+    }
+
+    return e;
 }
 
 function getContent51CA(data) {
