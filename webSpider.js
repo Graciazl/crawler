@@ -104,9 +104,6 @@ function getContentYorkBBS(data) {
         var $ = data[0],
             content = {};
 
-        var encodeStr = $('.item-views-cont-email').children().attr('href'),
-            encodeEmail = encodeStr.split('#')[1];
-
         content.name = $('.views > h1').text().trim();
         content.category = $('#SubCategoryName').text();
         content.tags = getTags('.item-cont-tags');
@@ -114,7 +111,7 @@ function getContentYorkBBS(data) {
         content.phone = $('.item-cont-bigphone').children().first().text();
         content.phone2 = '';
         content.language = $('.item_cont_lg').children().text();
-        content.email = emailDecode(encodeEmail);
+        content.email = getEmail('.item-views-cont-email');
         content.serviceArea = '';
         content.address = $('.views-bigphone-address').text().trim();
         content.postalCode = '';
@@ -134,6 +131,19 @@ function getContentYorkBBS(data) {
             });
 
             return tagsArr.join(',');
+        }
+
+        function getEmail(ele) {
+            var encodeStr = $(ele).children().attr('href');
+
+            if(encodeStr !== undefined){
+                var encodeEmail = encodeStr.split('#')[1];
+
+                return emailDecode(encodeEmail);
+            } else {
+
+                return '';
+            }
         }
 
         var result = [content, content.id, content.uploadImages];
