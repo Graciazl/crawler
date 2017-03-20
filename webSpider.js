@@ -143,16 +143,16 @@ function getContentYorkBBS(data) {
 }
 
 function emailDecode(encodeEmail) {
-    var e = '',
+    var email = '',
         r = parseInt(encodeEmail.substr(0, 2), 16),
         len = encodeEmail.length;
 
     for (var n = 2; n < len - 1; n += 2) {
         var i = parseInt(encodeEmail.substr(n, 2), 16) ^ r;
-        e += String.fromCharCode(i);
+        email += String.fromCharCode(i);
     }
 
-    return e;
+    return email;
 }
 
 function getContent51CA(data) {
