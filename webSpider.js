@@ -111,7 +111,8 @@ function getContentYorkBBS(data) {
         content.phone = $('.item-cont-bigphone').children().first().text();
         content.phone2 = '';
         content.language = $('.item_cont_lg').children().text();
-        content.email = $('.item-views-cont-email').children().attr('href'); // email protection
+/*        content.email = $('.item-views-cont-email').children().attr('href'); // email protection*/
+        content.email = emailDecode(encodeEmail);
         content.serviceArea = '';
         content.address = $('.views-bigphone-address').text().trim();
         content.postalCode = '';
@@ -132,6 +133,9 @@ function getContentYorkBBS(data) {
 
             return tagsArr.join(',');
         }
+
+        var encodeStr = $('.item-views-cont-email').children().attr('href'),
+            encodeEmail = encodeStr.split('#')[1];
 
         var result = [content, content.id, content.uploadImages];
 
