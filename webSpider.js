@@ -136,7 +136,7 @@ function getContentYorkBBS(data) {
         function getEmail(ele) {
             var encodeStr = $(ele).children().attr('href');
 
-            if(encodeStr !== undefined){
+            if (encodeStr !== undefined) {
                 var encodeEmail = encodeStr.split('#')[1];
 
                 return emailDecode(encodeEmail);
@@ -309,14 +309,16 @@ function contentProcessYorkBBS(url) {
     var body = loadHttp(url, getUtf8).then(getDom);
 
     return Promise.all([body, url])
-        .then(getContentYorkBBS);
+        .then(getContentYorkBBS)
+        .then(downloadImages);
 }
 
 function contentProcess51CA(url) {
     var body = loadHttp(url, getGb2312).then(getDom);
 
     return Promise.all([body, url])
-        .then(getContent51CA);
+        .then(getContent51CA)
+        .then(downloadImages);
 
 }
 
