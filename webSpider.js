@@ -102,6 +102,7 @@ function getUrlList51CA(url) {
 function getContentYorkBBS(data) {
     return new Promise(function (resolve, reject) {
         var $ = data[0],
+            url = data[1],
             content = {};
 
         content.name = $('.views > h1').text().trim();
@@ -120,7 +121,7 @@ function getContentYorkBBS(data) {
         content.updateTime = $('.postmeta').children().last().text().split('：')[1];
         content.uploadImages = getImagesURL($, '.views-detail-text', 'img', 'src');
         content.localImages = '';
-        content.url = data[1];
+        content.url = url;
         content.id = $('.postmeta').children().first().text().split('：')[1];
 
         function getTags(ele) {
@@ -168,6 +169,7 @@ function emailDecode(encodeEmail) {
 function getContent51CA(data) {
     return new Promise(function (resolve, reject) {
         var $ = data[0],
+            url = data[1],
             content = {};
 
         content.name = $('.MainTitle').text();
@@ -186,7 +188,7 @@ function getContent51CA(data) {
         content.updateTime = getValue('.ColumnTitle', 1);
         content.uploadImages = getImagesURL($, 'body', '.picsSlideGroup', 'href');
         content.localImages = '';
-        content.url = data[1];
+        content.url = url;
         content.id = $('input[name="itemid"]').attr('value');
 
         function getValue(ele, index) {
@@ -319,7 +321,6 @@ function contentProcess51CA(url) {
     return Promise.all([body, url])
         .then(getContent51CA)
         .then(downloadImages);
-
 }
 
 loadHttp(originalURL[0], getUtf8)
