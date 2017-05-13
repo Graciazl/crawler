@@ -99,7 +99,7 @@ function getUrlList51CA(url) {
     });
 }
 
-function getContentYorkBBS(data) {
+function getPageYorkBBS(data) {
     return new Promise(function (resolve, reject) {
         var $ = data[0],
             url = data[1],
@@ -166,7 +166,7 @@ function emailDecode(encodeEmail) {
     return email;
 }
 
-function getContent51CA(data) {
+function getPage51CA(data) {
     return new Promise(function (resolve, reject) {
         var $ = data[0],
             url = data[1],
@@ -311,7 +311,7 @@ function contentProcessYorkBBS(url) {
     var body = loadHttp(url, getUtf8).then(getDom);
 
     return Promise.all([body, url])
-        .then(getContentYorkBBS)
+        .then(getPageYorkBBS)
         .then(downloadImages);
 }
 
@@ -319,7 +319,7 @@ function contentProcess51CA(url) {
     var body = loadHttp(url, getGb2312).then(getDom);
 
     return Promise.all([body, url])
-        .then(getContent51CA)
+        .then(getPage51CA)
         .then(downloadImages);
 }
 
