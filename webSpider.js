@@ -7,7 +7,8 @@ var http = require('http'),
     iconv = require('iconv-lite'),
     cheerio = require('cheerio'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    async = require('async');
 
 var originalURL = [
     'http://info.yorkbbs.ca/default/tax',
@@ -179,7 +180,7 @@ function getPage51CA(data) {
         content.phone = getValue('.ColumnTitle', 4);
         content.phone2 = getValue('.ColumnTitle', 6);
         content.language = getLanguage('#CatTitleBox > span > img');
-        content.email = $('.ColumnTitle').eq(5).siblings().attr('href').split(':')[1];
+        content.email = getEmail('.ColumnTitle', 5);
         content.serviceArea = getValue('.ColumnTitle', 7);
         content.address = getValue('.ColumnTitle', 9);
         content.postalCode = '';
@@ -193,6 +194,16 @@ function getPage51CA(data) {
 
         function getValue(ele, index) {
             return $(ele).eq(index).parent().text().split('】')[1];
+        }
+
+        function getEmail(ele, index) {
+            var node = $(ele).eq(index).siblings();
+
+            if (node.attr('href') === undefined) {
+                return '';
+            } else {
+                return node.attr('href').split(':')[1];
+            }
         }
 
         function getLanguage(ele) {
@@ -322,15 +333,3 @@ function contentProcess51CA(url) {
         .then(getPage51CA)
         .then(downloadImages);
 }
-
-loadHttp(originalURL[0], getUtf8)
-    .then(getDom)
-    .then(getUrlListYorkBBS)
-    .then(function (data) {
-        return Promise.all(data.map(function (index) {
-            return contentProcessYorkBBS(index);
-        }));
-    })
-    .then(function (data) {
-        console.log(data);
-    });
