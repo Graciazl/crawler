@@ -287,7 +287,7 @@ function createPath(folder, url) {
     return path.join(folder, fileName);
 }
 
-function imageProcess(data, key) {
+/*function imageProcess(data, key) {
     var content = data[0],
         id = data[1],
         imgs = data[2],
@@ -304,6 +304,33 @@ function imageProcess(data, key) {
             saveImage(ele, filePath);
             imgPath.push(filePath);
         });
+    }
+
+    content[key] = imgPath.join(',');
+
+    return content;
+}*/
+
+function imageProcess(data, key) {
+    var content = data[0],
+        id = data[1],
+        imgs = data[2],
+        imgPath = [];
+
+    if (imgs !== '') {
+        var imgsUrl = imgs.split(',');
+
+        checkFolderExists(id);
+
+        async.mapLimit(imgsUrl, 1, function (url, callback) {
+            var filePath = createPath(id, url);
+
+            saveImage(url, filePath);
+            imgPath.push(filePath);
+
+            callback(null);
+        });
+
     }
 
     content[key] = imgPath.join(',');
