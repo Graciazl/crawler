@@ -287,30 +287,6 @@ function createPath(folder, url) {
     return path.join(folder, fileName);
 }
 
-/*function imageProcess(data, key) {
-    var content = data[0],
-        id = data[1],
-        imgs = data[2],
-        imgPath = [];
-
-    if (imgs !== '') {
-        var imgsUrl = imgs.split(',');
-
-        checkFolderExists(id);
-
-        imgsUrl.forEach(function (ele) {
-            var filePath = createPath(id, ele);
-
-            saveImage(ele, filePath);
-            imgPath.push(filePath);
-        });
-    }
-
-    content[key] = imgPath.join(',');
-
-    return content;
-}*/
-
 function imageProcess(data, key) {
     var content = data[0],
         id = data[1],
