@@ -43,9 +43,18 @@ function loadHttp(url, callback) {
 
                 resolve(result);
             });
+
+        }).on('error', function (err) {
+            if (err.code = 'ENOTFOUND') {
+                return;
+            } else {
+                reject(err);
+            }
+
         });
     });
 }
+
 
 function getUtf8(html) {
     return html.toString('utf8');
