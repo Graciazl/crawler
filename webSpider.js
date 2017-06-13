@@ -129,7 +129,8 @@ function getPageYorkBBS(data) {
         content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
         content.updateTime = $('.postmeta').children().last().text().split('：')[1];
-        content.uploadImages = getImagesURL($, '.views-detail-text', 'img', 'src');
+        /*        content.uploadImages = getImagesURL($, '.views-detail-text', 'img', 'src');*/
+        content.uploadImages = getRewritedUrl();
         content.localImages = '';
         content.url = url;
         content.id = $('.postmeta').children().first().text().split('：')[1];
@@ -154,6 +155,27 @@ function getPageYorkBBS(data) {
             } else {
 
                 return '';
+            }
+        }
+
+        function getRewritedUrl() {
+            var imgsUrl = getImagesURL($, '.views-detail-text', 'img', 'src');
+
+            if (imgsUrl !== '') {
+                var imgsUrlArr = imgs.split(',');
+
+                var imgRewritedUrl = imgsUrlArr.map(function (e) {
+                    var baseUrl = path.basename(e),
+                        dirUrl = path.dirname(e);
+
+                    if (baseUrl.indexOf('_') === -1) {
+                        return e;
+                    } else {
+                        return baseUrl.split('_')[0];
+                    }
+                });
+
+                return imgRewritedUrl;
             }
         }
 
