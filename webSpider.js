@@ -21,7 +21,8 @@ var key = 'localImages',
     eleYorkBBS = '.item-sort',
     ele51CA = '.itempos',
     prefixYorkBBS = 'http://info.yorkbbs.ca',
-    prefix51CA = 'http://www.51.ca/service/';
+    prefix51CA = 'http://www.51.ca/service/',
+    prefixYorkBBSImg = 'http://i.ybbs.ca/media/c1/';
 
 function loadHttp(url, callback) {
     var options = URL.parse(url);
@@ -115,6 +116,8 @@ function getPageYorkBBS(data) {
             url = data[1],
             content = {};
 
+        var imgUrlList = getImagesURL($, '.views-detail-text', 'img', 'src');
+
         content.name = $('.views > h1').text().trim();
         content.category = $('#SubCategoryName').text();
         content.tags = getTags('.item-cont-tags');
@@ -129,7 +132,7 @@ function getPageYorkBBS(data) {
         content.coordinates = $('.adver-map').children().last().children().eq(0).attr('href');
         content.homepage = $('.item-views-cont').eq(0).children().last().find('span > em > a').attr('href');
         content.updateTime = $('.postmeta').children().last().text().split('：')[1];
-        content.uploadImages = getRewritedUrl();
+        content.uploadImages = getRewritedUrl(prefixYorkBBSImg, imgUrlList);
         content.localImages = '';
         content.url = url;
         content.id = $('.postmeta').children().first().text().split('：')[1];
@@ -157,25 +160,26 @@ function getPageYorkBBS(data) {
             }
         }
 
-        function getRewritedUrl() {
-            var imgsUrl = getImagesURL($, '.views-detail-text', 'img', 'src');
+        function getRewritedUrl(prefix, imgUrl) {
+            if (imgUrl !== '') {
+                var imgUrlArr = imgUrl.split(',');
 
-            if (imgsUrl !== '') {
-                var imgsUrlArr = imgsUrl.split(',');
-
-                var imgRewritedUrl = imgsUrlArr.map(function (e) {
+                var imgRewritedUrl = imgUrlArr.map(function (e) {
                     var baseUrl = path.basename(e),
                         dirUrl = path.dirname(e),
                         ext = path.extname(e);
 
                     if (baseUrl.indexOf('_') !== -1 && dirUrl.indexOf('ybbs') !== -1) {
-                        return 'http://i.ybbs.ca/media/c1/' + baseUrl.split('_')[0] + ext;
+                        return prefix + baseUrl.split('_')[0] + ext;
                     } else {
                         return e;
                     }
                 });
 
                 return imgRewritedUrl.join(',');
+
+            } else {
+                return '';
             }
         }
 
@@ -275,8 +279,8 @@ function getImagesURL(body, ele1, ele2, attr) {
         });
 
         return imgArr.join(',');
-    } else {
 
+    } else {
         return '';
     }
 }
