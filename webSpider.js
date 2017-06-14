@@ -49,7 +49,7 @@ function loadHttp(url, callback) {
 
         req.on('error', function (err) {
             if (err.code === 'ENOTFOUND') {
-                console.log('There is a page or image which can be opened.');
+                console.log('There is a page or image which can not be opened.');
             } else {
                 reject(err);
             }
