@@ -32,7 +32,7 @@ function loadHttp(url, callback) {
     };
 
     return new Promise(function (resolve, reject) {
-        http.get(options, function (response) {
+        var req = http.get(options, function (response) {
             var html = [];
 
             response.on('data', function (data) {
@@ -45,17 +45,19 @@ function loadHttp(url, callback) {
                 resolve(result);
             });
 
-        }).on('error', function (err) {
-            if (err.code = 'ENOTFOUND') {
-                return;
+        });
+
+        req.on('error', function (err) {
+            if (err.code === 'ENOTFOUND') {
+                console.log('There is a page or image which can be opened.');
             } else {
                 reject(err);
             }
-
         });
+
+        req.end();
     });
 }
-
 
 function getUtf8(html) {
     return html.toString('utf8');
@@ -154,8 +156,8 @@ function getPageYorkBBS(data) {
                 var encodeEmail = encodeStr.split('#')[1];
 
                 return emailDecode(encodeEmail);
-            } else {
 
+            } else {
                 return '';
             }
         }
