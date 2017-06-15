@@ -339,7 +339,6 @@ function imageProcess(data, key) {
 
             callback(null);
         });
-
     }
 
     content[key] = imgPath.join(',');
