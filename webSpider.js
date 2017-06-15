@@ -10,12 +10,8 @@ var http = require('http'),
     path = require('path'),
     async = require('async');
 
-var originalURL = [
-    'http://info.yorkbbs.ca/default/tax',
-    'http://info.yorkbbs.ca/default/zhusu',
-    'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=9',
-    'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3'
-];
+var yellowpage51ca = 'http://www.51.ca/service/servicedisplay.php?s=218a1f619be430d93fbfa1872669596e&serviceid=3',
+    yellowpageYork = 'http://info.yorkbbs.ca/default/zhusu';
 
 var key = 'localImages',
     eleYorkBBS = '.item-sort',
@@ -48,8 +44,8 @@ function loadHttp(url, callback) {
         });
 
         req.on('error', function (err) {
-            if (err.code === 'ENOTFOUND') {
-                console.log('There is a page or image which can not be opened.');
+            if (err.code === 'ENOTFOUND' || err.code === 'ECONNRESET') {
+                console.error('err:' + err.code + url);
             } else {
                 reject(err);
             }
@@ -363,7 +359,10 @@ function contentProcessYorkBBS(url) {
 
     return Promise.all([body, url])
         .then(getPageYorkBBS)
-        .then(downloadImages);
+        .then(downloadImages)
+        .then(function (data) {
+            console.log(data);
+        });
 }
 
 function contentProcess51CA(url) {
@@ -371,5 +370,28 @@ function contentProcess51CA(url) {
 
     return Promise.all([body, url])
         .then(getPage51CA)
-        .then(downloadImages);
+        .then(downloadImages)
+        .then(function (data) {
+            console.log(data);
+        });
 }
+
+loadHttp(yellowpage51ca, getGb2312)
+    .then(getDom)
+    .then(getUrlList51CA)
+    .then(function (urls) {
+        async.mapLimit(urls, 1, function (url, callback) {
+            contentProcess51CA(url);
+            callback(null);
+        });
+    });
+
+loadHttp(yellowpageYork, getUtf8)
+    .then(getDom)
+    .then(getUrlListYorkBBS)
+    .then(function (urls) {
+        async.mapLimit(urls, 1, function (url, callback) {
+            contentProcessYorkBBS(url);
+            callback(null);
+        });
+    });
