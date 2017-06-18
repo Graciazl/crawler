@@ -45,8 +45,8 @@ function loadHttp(url, callback) {
         req.on('error', function (err) {
             if (err.code === 'ENOTFOUND') {
                 console.log('err:' + 'Can not open ' + url);
-            } else if(err.code === 'ECONNRESET') {
-                req.setTimeout(60000, function(){
+            } else if (err.code === 'ECONNRESET') {
+                req.setTimeout(60000, function () {
                     req.abort();
                 });
             } else {
