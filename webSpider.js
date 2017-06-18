@@ -40,12 +40,15 @@ function loadHttp(url, callback) {
 
                 resolve(result);
             });
-
         });
 
         req.on('error', function (err) {
-            if (err.code === 'ENOTFOUND' || err.code === 'ECONNRESET') {
-                console.error('err:' + err.code + url);
+            if (err.code === 'ENOTFOUND') {
+                console.log('err:' + 'Can not open ' + url);
+            } else if(err.code === 'ECONNRESET') {
+                req.setTimeout(60000, function(){
+                    req.abort();
+                });
             } else {
                 reject(err);
             }
@@ -54,6 +57,7 @@ function loadHttp(url, callback) {
         req.end();
     });
 }
+
 
 function getUtf8(html) {
     return html.toString('utf8');
@@ -385,7 +389,7 @@ loadHttp(yellowpage51ca, getGb2312)
         });
     });
 
-loadHttp(yellowpageYork, getUtf8)
+loadHttp(yellowpage51ca, getUtf8)
     .then(getDom)
     .then(getUrlListYorkBBS)
     .then(function (urls) {
