@@ -389,7 +389,7 @@ loadHttp(yellowpage51ca, getGb2312)
         });
     });
 
-loadHttp(yellowpage51ca, getUtf8)
+loadHttp(yellowpageYork, getUtf8)
     .then(getDom)
     .then(getUrlListYorkBBS)
     .then(function (urls) {
