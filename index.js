@@ -58,7 +58,6 @@ function loadHttp(url, callback) {
     });
 }
 
-
 function getUtf8(html) {
     return html.toString('utf8');
 }
